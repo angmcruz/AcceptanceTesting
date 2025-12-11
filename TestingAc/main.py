@@ -1,6 +1,6 @@
-from todo_list import TodoList
+from todo_list import ToDoList
 
-todo = TodoList()
+todo = ToDoList()
 
 def menu():
     while True:
