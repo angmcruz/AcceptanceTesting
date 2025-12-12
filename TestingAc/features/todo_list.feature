@@ -6,7 +6,7 @@ Feature: To-Do List Manager
     Then the to-do list should contain "Buy groceries"
 
   Scenario: List all tasks in the to-do list
-    Given the to-do list contains tasks:
+    Given the to-do list contains the following tasks:
       | Task         |
       | Buy groceries|
       | Pay bills    |
@@ -17,22 +17,17 @@ Feature: To-Do List Manager
       | Pay bills    |
 
   Scenario: Mark a task as completed
-    Given the to-do list contains tasks:
-      | Task         | Status  |
-      | Buy groceries| Pending |
+    Given the to-do list contains a task "Buy groceries" with status "Pending"
     When the user marks task "Buy groceries" as completed
     Then the to-do list should show task "Buy groceries" as completed
 
   Scenario: Clear the entire to-do list
-    Given the to-do list contains tasks:
-      | Task         |
-      | Buy groceries|
-      | Pay bills    |
+    Given the to-do list has some tasks
     When the user clears the to-do list
     Then the to-do list should be empty
 
   Scenario: Delete a specific task (NEW FEATURE)
-    Given the to-do list contains tasks:
+    Given the to-do list contains the following tasks:
       | Task         |
       | Homework     |
       | Laundry      |

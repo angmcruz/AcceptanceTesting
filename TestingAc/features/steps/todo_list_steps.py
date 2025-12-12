@@ -14,9 +14,7 @@ def step_impl(context, title):
     titles = [task.title for task in context.todo.list_tasks()]
     assert title in titles
 
-
-# LIST TASKS
-@given('the to-do list contains tasks:')
+@given('the to-do list contains the following tasks:')
 def step_impl(context):
     context.todo = ToDoList()
     for row in context.table:
@@ -31,14 +29,12 @@ def step_impl(context):
     for row in context.table:
         assert row['Task'] in context.output
 
-
-# MARK COMPLETED
-@given('the to-do list contains tasks:')
-def step_impl(context):
+# MARK COMPLETED - Paso específico con estado
+@given('the to-do list contains a task "{title}" with status "{status}"')
+def step_impl(context, title, status):
     context.todo = ToDoList()
-    for row in context.table:
-        task = Task(row['Task'], status=row['Status'])
-        context.todo.tasks.append(task)
+    task = Task(title, status=status)
+    context.todo.tasks.append(task)
 
 @when('the user marks task "{title}" as completed')
 def step_impl(context, title):
@@ -50,8 +46,13 @@ def step_impl(context, title):
         if t.title == title:
             assert t.status == "Completed"
 
+# CLEAR LIST - Usa el mismo paso que LIST TASKS pero sin tabla
+@given('the to-do list has some tasks')
+def step_impl(context):
+    context.todo = ToDoList()
+    context.todo.add_task("Buy groceries")
+    context.todo.add_task("Pay bills")
 
-# CLEAR LIST
 @when('the user clears the to-do list')
 def step_impl(context):
     context.todo.clear_tasks()
@@ -59,7 +60,6 @@ def step_impl(context):
 @then('the to-do list should be empty')
 def step_impl(context):
     assert len(context.todo.tasks) == 0
-
 
 # DELETE TASK
 @when('the user deletes the task "{title}"')

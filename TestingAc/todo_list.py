@@ -13,8 +13,8 @@ class ToDoList:
     def __init__(self):
         self.tasks = []
 
-    def add_task(self, title, description="", priority="Medium"):
-        task = Task(title, description, priority)
+    def add_task(self, title, description="", priority="Medium", status="Pending"):
+        task = Task(title, description, priority, status)
         self.tasks.append(task)
 
     def list_tasks(self):
